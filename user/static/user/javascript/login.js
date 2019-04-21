@@ -15,6 +15,8 @@ var user = new Vue({
                 headers: {
                     'Content-Type':'application/x-www-form-urlencoded'
                 }
+            }).then(function (response) {
+                alert('Hello ' + response.data['username']);
             });
         }
     }

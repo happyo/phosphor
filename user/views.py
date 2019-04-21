@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 def login(request):
     if request.method == 'POST':
         logger.error(request.POST)
-        return JsonResponse({ 'username': 'happyo' })
+        return JsonResponse({ 'username': request.POST['username'] })
     else:
         return render(request, 'user/loginIndex.html')
 

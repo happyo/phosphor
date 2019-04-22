@@ -24,7 +24,6 @@ var register = new Vue({
                     var message = data['data']['errorMessage'];
                     alert(message);
                 } else {
-                    // this.$router.push('/login');
                     location.href = '/login';
                 }
             });

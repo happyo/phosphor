@@ -1,13 +1,15 @@
-var user = new Vue({
-    el: '#user',
+
+var register = new Vue({
+    el: '#register',
     data: {
         username: '',
         password: ''
     },
     methods: {
-        login: function (event) {
+        join: function (event) {
             var params = new URLSearchParams();
-            params.append('username', this.username);
+            params.append('username', register.username);
+            params.append('password', register.password);
             axios({
                 method: 'post',
                 url: '',
@@ -22,9 +24,11 @@ var user = new Vue({
                     var message = data['data']['errorMessage'];
                     alert(message);
                 } else {
-                    alert('Hello ' + response.data['username']);
+                    // this.$router.push('/login');
+                    location.href = '/login';
                 }
             });
         }
     }
 })
+

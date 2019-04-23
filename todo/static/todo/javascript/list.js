@@ -1,8 +1,9 @@
 var list = new Vue({
-    el: '#todoList',
+    el: '#list',
     data: {
         items: []
     },
+
     mounted() {
         axios({
             method: 'get',
@@ -10,7 +11,7 @@ var list = new Vue({
             headers: {
                 'Accept':'application/json'
             }
-        }).then(function (response) {
+        }).then(response => {
             var data = response['data'];
             var code = data['code'];
             if (code == 0) {
@@ -18,7 +19,14 @@ var list = new Vue({
                 alert(message);
             } else {
                 this.items = data['data']['items'];
+                console.log(this.items[0]);
             }
         });
+    },
+
+    methods: {
+        addItem: function (event) {
+            // axios()
+        }
     }
-})
+});

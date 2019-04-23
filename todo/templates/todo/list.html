@@ -7,9 +7,12 @@
 </head>
 <body>
     <div id="todoList">
+        <ul>
+            <li v-for="item in items">{{ item.title }}</li>
+        </ul>
     </div>
 
-    <script src="{% static 'user/javascript/list.js' %}">
+    <script src="{% static 'todo/javascript/list.js' %}">
     </script>
 </body>
 </html>

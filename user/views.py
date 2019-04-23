@@ -1,7 +1,7 @@
 import logging
 
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse, HttpResponseRedirect, HttpRequest
 from django.views.decorators.csrf import csrf_exempt
 from .models import UserAccount
 from django.urls import reverse
@@ -21,6 +21,7 @@ def login(request):
         return response
     else:
         logger.error(request)
+        logger.error(request.META['HTTP_ACCEPT'])
         return render(request, 'user/loginIndex.html')
 
 @csrf_exempt

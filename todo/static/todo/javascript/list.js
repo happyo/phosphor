@@ -26,7 +26,8 @@ var list = new Vue({
 
     methods: {
         addItem: function (event) {
-            // axios()
+            var href = location.href;
+            location.href = href + 'new';
         }
     }
 });

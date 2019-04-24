@@ -1,0 +1,18 @@
+{% load static %}
+
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
+    <div id="todo">
+        <input type="text" v-model="title"/>
+        <input type="text" v-model="detail"/>
+        <button v-on:click="add">add</button>
+        </div>
+
+        <script src="{% static 'todo/javascript/add.js' %}">
+        </script>
+        </body>
+</html>

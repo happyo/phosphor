@@ -22,7 +22,8 @@ var user = new Vue({
                     var message = data['data']['errorMessage'];
                     alert(message);
                 } else {
-                    alert('Hello ' + response.data['username']);
+                    var username = data['data']['username'];
+                    location.href = '/' + username + '/todos';
                 }
             });
         }

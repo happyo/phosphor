@@ -5,7 +5,7 @@ from django.http import HttpRequest
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 
-from common.utils import ResponseHelper
+from common.utils.ResponseHelper import normalJsonResponse, errorJsonResponse
 from .models import UserAccount
 
 logger = logging.getLogger(__name__)
@@ -19,7 +19,7 @@ def login(request):
         except UserAccount.DoesNotExist:
             return errorJsonResponse('Incorrect username or password')
         response = normalJsonResponse({ 'username': request.POST['username'] })
-        response.set_cookie(user_id, user.id)
+        response.set_cookie('user_id', user.id)
         return response
     else:
         logger.error(request)

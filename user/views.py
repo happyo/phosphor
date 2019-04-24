@@ -1,10 +1,12 @@
 import logging
 
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponseRedirect, HttpRequest
+from django.http import HttpRequest
 from django.views.decorators.csrf import csrf_exempt
-from .models import UserAccount
 from django.urls import reverse
+
+from common.utils import ResponseHelper
+from .models import UserAccount
 
 logger = logging.getLogger(__name__)
 
@@ -42,12 +44,3 @@ def join(request):
             return HttpResponseRedirect(reverse('user:haha'))
         else:
             return errorJsonResponse('User already exists')
-
-def haha(request):
-    return render(request, 'user/haha.html')
-
-def errorJsonResponse(errorMessage):
-    return JsonResponse({'code' : 0, 'data' : { 'errorMessage' : errorMessage }})
-
-def normalJsonResponse(jsonData):
-    return JsonResponse({'code' : 1, 'data' : jsonData});

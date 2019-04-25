@@ -11,8 +11,10 @@ from django.http import QueryDict
 from .models import UserTodo, Todo
 from user.models import UserAccount
 from common.utils.ResponseHelper import normalJsonResponse, errorJsonResponse
+from user.auth.permission import auth_permission_required
 
 @method_decorator(csrf_exempt, name='dispatch')
+@method_decorator(auth_permission_required, name='dispatch')
 class TodoListView(View):
 
     def get(self, request, username):
@@ -44,8 +46,6 @@ class TodoListView(View):
                 userTodo = UserTodo()
                 userTodo.user_id = user.id
                 userTodo.todo_id = todo.id
-                logging.error(user.id)
-                logging.error(todo.id)
                 userTodo.save()
 
                 return normalJsonResponse({})

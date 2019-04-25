@@ -9,10 +9,9 @@ var todo = new Vue({
             var params = new URLSearchParams();
             params.append('title', this.title);
             params.append('detail', this.detail);
-            var currentHref = location.href;
-            var the_arr = currentHref.split('/');
-            the_arr.pop();
-            var postUrl = the_arr.join('/') + '/';
+            var parts = location.href.split('/');
+            var lastSegment = parts.pop() || parts.pop();  // handle potential trailing slash
+            var postUrl = parts.join('/');
             axios({
                 method: 'post',
                 url: postUrl,

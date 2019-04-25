@@ -4,12 +4,13 @@ from django.shortcuts import render
 from django.views.generic.base import View
 from django.core import serializers
 from django.forms.models import model_to_dict
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from django.http import QueryDict
 
 from .models import UserTodo, Todo
 from user.models import UserAccount
 from common.utils.ResponseHelper import normalJsonResponse, errorJsonResponse
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
 
 @method_decorator(csrf_exempt, name='dispatch')
 class TodoListView(View):
@@ -60,8 +61,8 @@ class TodoView(View):
 
     def get(self, request, username, todo_id):
         if request.META['HTTP_ACCEPT'] == 'application/json':
-            todo = Todo.objects.get(pk=todo_id).values()
-            return normalJsonResponse({"item" : todo})
+            todo = Todo.objects.get(pk=todo_id)
+            return normalJsonResponse({"item" : { "title" : todo.title, "id" : todo.id, "detail" : todo.detail}})
         else:
             return render(request, 'todo/edit.html')
 
@@ -71,8 +72,6 @@ class TodoView(View):
         if 'title' in put_params:
             title = put_params['title']
             todo.title = title
-        else:
-            return errorJsonResponse('Title can not be empty!')
         if 'detail' in put_params:
             detail = put_params['detail']
             todo.detail = detail

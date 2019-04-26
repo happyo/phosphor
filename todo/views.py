@@ -57,6 +57,7 @@ class TodoListView(View):
             return render(request, 'todo/add.html')
 
 @method_decorator(csrf_exempt, name='dispatch')
+@method_decorator(auth_permission_required, name='dispatch')
 class TodoView(View):
 
     def get(self, request, username, todo_id):

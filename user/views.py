@@ -1,9 +1,11 @@
 import logging
+import jwt
 
 from django.shortcuts import render
 from django.http import HttpRequest
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
+from django.conf import settings
 
 from common.utils.ResponseHelper import normalJsonResponse, errorJsonResponse
 from .models import UserAccount
@@ -19,7 +21,9 @@ def login(request):
         except UserAccount.DoesNotExist:
             return errorJsonResponse('Incorrect username or password')
         response = normalJsonResponse({ 'username': request.POST['username'] })
-        response.set_cookie('user_id', user.id)
+        token = jwt.encode({'username' : user.username}, settings.SECRET_KEY, algorithm='HS256').decode('utf-8')
+        logging.error(token)
+        response.set_cookie('token', token)
         return response
     else:
         logger.error(request)

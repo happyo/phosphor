@@ -26,6 +26,9 @@ var user = new Vue({
                     location.href = '/' + username + '/todos';
                 }
             });
+        },
+        register: function (event) {
+            location.href = '/join';
         }
     }
 })

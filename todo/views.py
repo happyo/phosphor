@@ -87,5 +87,6 @@ class TodoView(View):
         todo.delete()
         return normalJsonResponse({})
 
+@auth_permission_required
 def createItemPage(request, username):
     return render(request, 'todo/add.html')

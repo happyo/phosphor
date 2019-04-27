@@ -31,7 +31,7 @@ class TodoListView(View):
 
     def post(self, request, username):
         if request.META['HTTP_ACCEPT'] == 'application/json':
-            logging.error('get')
+            # logging.error('get')
             try:
                 title = request.POST['title']
                 detail = request.POST['detail']

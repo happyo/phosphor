@@ -22,12 +22,12 @@ def login(request):
             return errorJsonResponse('Incorrect username or password')
         response = normalJsonResponse({ 'username': request.POST['username'] })
         token = jwt.encode({'username' : user.username}, settings.SECRET_KEY, algorithm='HS256').decode('utf-8')
-        logging.error(token)
+        # logging.error(token)
         response.set_cookie('token', token)
         return response
     else:
-        logger.error(request)
-        logger.error(request.META['HTTP_ACCEPT'])
+        # logger.error(request)
+        # logger.error(request.META['HTTP_ACCEPT'])
         return render(request, 'user/loginIndex.html')
 
 @csrf_exempt
@@ -45,6 +45,6 @@ def join(request):
             newUser.username = username
             newUser.password = password
             newUser.save()
-            return HttpResponseRedirect(reverse('user:haha'))
+            return normalJsonResponse({})
         else:
             return errorJsonResponse('User already exists')

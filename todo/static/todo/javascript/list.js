@@ -25,6 +25,21 @@ var list = new Vue({
     },
 
     methods: {
+        signOut: function (event) {
+            axios({
+                method: 'delete',
+                url: '/login',
+            }).then(function (response) {
+                var data = response['data'];
+                var code = data['code'];
+                if (code == 0) {
+                    var message = data['data']['errorMessage'];
+                    alert(message);
+                } else {
+                    location.href = '/login';
+                }
+            });
+        },
         addItem: function (event) {
             var href = location.href;
             location.href = href + '/new';

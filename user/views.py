@@ -32,6 +32,11 @@ class LoginView(View):
         response.set_cookie('token', token)
         return response
 
+    def delete(self, request):
+        response = normalJsonResponse({})
+        response.delete_cookie('token')
+        return response
+
 @method_decorator(csrf_exempt, name='dispatch')
 class RegisterView(View):
 

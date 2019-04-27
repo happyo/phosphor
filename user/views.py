@@ -4,6 +4,8 @@ import jwt
 from django.shortcuts import render
 from django.http import HttpRequest
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic.base import View
+from django.utils.decorators import method_decorator
 from django.urls import reverse
 from django.conf import settings
 
@@ -12,9 +14,13 @@ from .models import UserAccount
 
 logger = logging.getLogger(__name__)
 
-@csrf_exempt
-def login(request):
-    if request.method == 'POST':
+@method_decorator(csrf_exempt, name='dispatch')
+class LoginView(View):
+
+    def get(self, request):
+        return render(request, 'user/loginIndex.html')
+
+    def post(self, request):
         username = request.POST['username']
         try:
             user = UserAccount.objects.get(username=username)
@@ -25,16 +31,14 @@ def login(request):
         # logging.error(token)
         response.set_cookie('token', token)
         return response
-    else:
-        # logger.error(request)
-        # logger.error(request.META['HTTP_ACCEPT'])
-        return render(request, 'user/loginIndex.html')
 
-@csrf_exempt
-def join(request):
-    if request.method == 'GET':
+@method_decorator(csrf_exempt, name='dispatch')
+class RegisterView(View):
+
+    def get(self, request):
         return render(request, 'user/join.html')
-    elif request.method == 'POST':
+
+    def post(self, request):
         params = request.POST
         username = params['username']
         password = params['password']
@@ -48,3 +52,4 @@ def join(request):
             return normalJsonResponse({})
         else:
             return errorJsonResponse('User already exists')
+

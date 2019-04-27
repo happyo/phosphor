@@ -9,7 +9,7 @@ var list = new Vue({
             method: 'get',
             url: '',
             headers: {
-                'Accept':'application/json'
+                'accept':'application/json'
             }
         }).then(response => {
             var data = response['data'];

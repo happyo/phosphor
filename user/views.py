@@ -21,16 +21,23 @@ class LoginView(View):
         return render(request, 'user/loginIndex.html')
 
     def post(self, request):
-        username = request.POST['username']
         try:
+            username = request.POST['username']
+            password = request.POST['password']
             user = UserAccount.objects.get(username=username)
+
+            if user.password == password:
+                response = normalJsonResponse({ 'username': request.POST['username'] })
+                token = jwt.encode({'username' : user.username}, settings.SECRET_KEY, algorithm='HS256').decode('utf-8')
+                # logging.error(token)
+                response.set_cookie('token', token)
+                return response
+            else:
+                return errorJsonResponse('Incorrect username or password')
         except UserAccount.DoesNotExist:
             return errorJsonResponse('Incorrect username or password')
-        response = normalJsonResponse({ 'username': request.POST['username'] })
-        token = jwt.encode({'username' : user.username}, settings.SECRET_KEY, algorithm='HS256').decode('utf-8')
-        # logging.error(token)
-        response.set_cookie('token', token)
-        return response
+        else:
+            return errorJsonResponse('Something error')
 
     def delete(self, request):
         response = normalJsonResponse({})
@@ -45,9 +52,10 @@ class RegisterView(View):
 
     def post(self, request):
         params = request.POST
-        username = params['username']
-        password = params['password']
+        logging.error(params)
         try:
+            username = params['username']
+            password = params['password']
             user = UserAccount.objects.get(username=username)
         except UserAccount.DoesNotExist:
             newUser = UserAccount()
@@ -55,6 +63,8 @@ class RegisterView(View):
             newUser.password = password
             newUser.save()
             return normalJsonResponse({})
+        except KeyError:
+            return errorJsonResponse('Please upload a username and password')
         else:
             return errorJsonResponse('User already exists')
 

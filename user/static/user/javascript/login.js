@@ -6,12 +6,11 @@ var user = new Vue({
     },
     methods: {
         login: function (event) {
-            apiSignIn({'username' : this.username}).then(res => {
+            apiSignIn({'username' : this.username, 'password' : this.password}).then(res => {
                 var data = res['data'];
                 var username = data['username'];
                 location.href = '/' + username + '/todos';
-            }).catch(err => {
-            });
+            }).catch();
         },
         register: function (event) {
             location.href = '/join';

@@ -5,86 +5,32 @@ var list = new Vue({
     },
 
     mounted() {
-        axios({
-            method: 'get',
-            url: '',
-            headers: {
-                'accept':'application/json'
-            }
-        }).then(response => {
-            var data = response['data'];
-            var code = data['code'];
-            if (code == 0) {
-                var message = data['data']['errorMessage'];
-                alert(message);
-            } else {
-                this.items = data['data']['items'];
-                console.log(this.items[0]);
-            }
+        apiTodoList().then(res => {
+            this.items = res['data']['items'];
         });
     },
 
     methods: {
         signOut: function (event) {
-            axios({
-                method: 'delete',
-                url: '/login',
-            }).then(function (response) {
-                var data = response['data'];
-                var code = data['code'];
-                if (code == 0) {
-                    var message = data['data']['errorMessage'];
-                    alert(message);
-                } else {
-                    location.href = '/login';
-                }
+            apiSignOut().then(res => {
+                location.href = '/login';
             });
         },
         addItem: function (event) {
             var href = location.href;
-            location.href = href + '/new';
+            location.href = '/' + cookieUsername() + '/todos/new';
         },
         editItem: function (todoId) {
-            var href = location.href;
-            console.log(href + '/' + todoId);
-            location.href = href + '/' + todoId + '/';
+            location.href = '/' + cookieUsername() + '/todos/' + todoId + '/';
         },
         finishItem: function (todoId) {
-            var params = new URLSearchParams();
-            params.append('status', 1);
-            var requestUrl = location.href + '/' + todoId + '/';
-            axios({
-                method: 'put',
-                url: requestUrl,
-                data: params,
-                headers: {
-                    'Content-Type':'application/x-www-form-urlencoded'
-                }
-            }).then(function (response) {
-                var data = response['data'];
-                var code = data['code'];
-                if (code == 0) {
-                    var message = data['data']['errorMessage'];
-                    alert(message);
-                } else {
-                    location.reload();
-                }
+            apiFifishTodo(todoId, {'status' : 1}).then(res => {
+                location.reload();
             });
         },
         deleteItem: function (todoId) {
-            var requestUrl = location.href + '/' + todoId + '/';
-            axios({
-                method: 'delete',
-                url: requestUrl,
-            }).then(function (response) {
-                var data = response['data'];
-                var code = data['code'];
-                if (code == 0) {
-                    var message = data['data']['errorMessage'];
-                    alert(message);
-                } else {
-                    location.reload();
-                }
+            apiDeleteTodo(todoId).then(res => {
+                location.reload();
             });
         }
     }

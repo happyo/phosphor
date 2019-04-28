@@ -4,15 +4,24 @@
 <head>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    </head>
-    <body>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="https://cdn.bootcss.com/qs/6.5.2/qs.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@1.6/lib/index.css">
+
+    <!-- 引入组件 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vant@1.6/lib/vant.min.js"></script>
+    <script src="{% static 'todo/javascript/api.js' %}"></script>
+    <script src="{% static 'javascript/request/http.js' %}"></script>
+</head>
+<body>
     <div id="todo">
         <input type="text" v-model="title"/>
         <input type="text" v-model="detail"/>
         <button v-on:click="add">add</button>
-        </div>
+    </div>
 
-        <script src="{% static 'todo/javascript/add.js' %}">
-        </script>
-        </body>
+    <script src="{% static 'todo/javascript/add.js' %}"></script>
+</body>
 </html>

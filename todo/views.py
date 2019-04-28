@@ -31,7 +31,7 @@ class TodoListView(View):
             return render(request, 'todo/list.html')
 
     def post(self, request, username):
-        if request.META['HTTP_ACCEPT'] == 'application/json':
+        if request.META['HTTP_ACCEPT'].startswith('application/json'):
             # logging.error('get')
             try:
                 title = request.POST['title']
@@ -62,7 +62,7 @@ class TodoListView(View):
 class TodoView(View):
 
     def get(self, request, username, todo_id):
-        if request.META['HTTP_ACCEPT'] == 'application/json':
+        if request.META['HTTP_ACCEPT'].startswith('application/json'):
             todo = Todo.objects.get(pk=todo_id)
             return normalJsonResponse({"item" : { "title" : todo.title, "id" : todo.id, "detail" : todo.detail}})
         else:

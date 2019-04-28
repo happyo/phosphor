@@ -9,7 +9,7 @@ var register = new Vue({
         join: function (event) {
             apiJoin({'username' : this.username, 'password' : this.password}).then(res => {
                 location.href = '/login';
-            }).catch();
+            });
         }
     }
 })

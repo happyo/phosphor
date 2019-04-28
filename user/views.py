@@ -31,6 +31,7 @@ class LoginView(View):
                 token = jwt.encode({'username' : user.username}, settings.SECRET_KEY, algorithm='HS256').decode('utf-8')
                 # logging.error(token)
                 response.set_cookie('token', token)
+                response.set_cookie('username', username)
                 return response
             else:
                 return errorJsonResponse('Incorrect username or password')
@@ -42,6 +43,7 @@ class LoginView(View):
     def delete(self, request):
         response = normalJsonResponse({})
         response.delete_cookie('token')
+        response.delete_cookie('username')
         return response
 
 @method_decorator(csrf_exempt, name='dispatch')

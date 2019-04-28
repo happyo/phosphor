@@ -10,7 +10,7 @@ var user = new Vue({
                 var data = res['data'];
                 var username = data['username'];
                 location.href = '/' + username + '/todos';
-            }).catch();
+            });
         },
         register: function (event) {
             location.href = '/join';

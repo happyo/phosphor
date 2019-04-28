@@ -7,29 +7,28 @@ axios.defaults.timeout = 10000;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 
 // 响应拦截器
-axios.interceptors.response.use(config => {
+axios.interceptors.response.use(
     response => {
         if (response.status == 200) {
             var data = response['data'];
             var code = data['code'];
 
             if (code == 0) {
-                var errorMessage = response['data']['errorMessage'];
-                Toast({
-                    message: errorMessage,
-                    duration: 1500,
-                    forbidClick: true
-                });
+                var errorMessage = data['data']['errorMessage'];
+                vant.Toast(errorMessage);
 
-                return Promise.resolve(response);
+                return Promise.reject(response);
             } else {
                 return Promise.resolve(response);
             }
         } else {
             return Promise.reject(response);
         }
+    },
+    error => {
+        return Promise.reject(error.response);
     }
-});
+);
 
 function getWithConfig(url, params, config) {
     return new Promise((resolve, reject) => {

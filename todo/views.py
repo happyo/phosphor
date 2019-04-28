@@ -18,7 +18,8 @@ from user.auth.permission import auth_permission_required
 class TodoListView(View):
 
     def get(self, request, username):
-        if request.META['HTTP_ACCEPT'] == 'application/json':
+        # logging.error(request.META['HTTP_ACCEPT'])
+        if request.META['HTTP_ACCEPT'].startswith('application/json'):
             user = UserAccount.objects.get(username=username)
             userTodos = UserTodo.objects.filter(user_id=user.id)
             todoIds = list(map(lambda userTodo: userTodo.todo_id, userTodos))

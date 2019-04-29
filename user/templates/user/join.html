@@ -16,9 +16,36 @@
     </head>
     <body>
         <div id="register">
-            <input type="text" v-model="username"/>
-            <input type="password" v-model="password"/>
-            <button v-on:click="join">Join now</button>
+
+            <!-- <input type="text" v-model="username"/> -->
+            <!-- <input type="password" v-model="password"/> -->
+            <!-- <button v-on:click="join">Join now</button> -->
+
+            <van-row>
+                <van-cell-group>
+                    <van-field
+                        v-model="username"
+                        required
+                        clearable
+                        label="用户名"
+                        placeholder="请输入用户名"
+                    ></van-field>
+
+                    <van-field
+                        v-model="password"
+                        type="password"
+                        label="密码"
+                        placeholder="请输入密码"
+                        required
+                    ></van-field>
+
+                </van-cell-group>
+            </van-row>
+            <van-row gutter="20" type="flex" justify="center">
+                <van-col span="8">
+                    <van-button size="large" type="primary" v-on:click="join">Join now</van-button>
+                </van-col>
+            </van-row>
         </div>
 
         <script src="{% static 'user/javascript/join.js' %}">

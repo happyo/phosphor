@@ -7,9 +7,13 @@ var register = new Vue({
     },
     methods: {
         join: function (event) {
-            apiJoin({'username' : this.username, 'password' : this.password}).then(res => {
-                location.href = '/login';
-            });
+            if (this.username.length == 0 || this.password.length == 0) {
+                vant.Toast('用户名密码不能为空');
+            } else {
+                apiJoin({'username' : this.username, 'password' : this.password}).then(res => {
+                    location.href = '/login';
+                });
+            }
         }
     }
 })

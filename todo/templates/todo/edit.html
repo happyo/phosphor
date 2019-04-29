@@ -17,11 +17,29 @@
 </head>
 <body>
     <div id="todo">
-        <input type="text" v-model="title"/>
-        <input type="text" v-model="detail"/>
-        <button v-on:click="edit">Update todo</button>
-    </div>
+        <van-cell-group>
+            <van-field
+                v-model="title"
+                required
+                clearable
+                label="名称"
+            ></van-field>
 
+            <van-field
+                v-model="detail"
+                label="详细描述"
+                autosize
+            ></van-field>
+        </van-cell-group>
+
+
+        <van-row gutter="20" type="flex" justify="center">
+            <van-col span="8">
+                <van-button size="large" type="primary" v-on:click="edit">修改</van-button>
+            </van-col>
+        </van-row>
+
+    </div>
     <script src="{% static 'todo/javascript/edit.js' %}"></script>
 </body>
 </html>

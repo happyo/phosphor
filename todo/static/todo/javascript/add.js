@@ -6,9 +6,13 @@ var todo = new Vue({
     },
     methods: {
         add: function (event) {
-            apiAddTodo({'title' : this.title, 'detail' : this.detail}).then(res => {
-                location.href = '/' + cookieUsername() + '/todos';
-            });
+            if (this.title.length == 0) {
+                vant.Toast('名称不能为空');
+            } else {
+                apiAddTodo({'title' : this.title, 'detail' : this.detail}).then(res => {
+                    location.href = '/' + cookieUsername() + '/todos';
+                });
+            }
         }
     }
 })

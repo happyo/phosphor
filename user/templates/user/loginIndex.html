@@ -15,10 +15,34 @@
     <body>
 
         <div id="user">
-            <input type="text" v-model="username"/>
-            <input type="password" v-model="password"/>
-            <button v-on:click="login">Sign in</button>
-            <button v-on:click="register">Sign up</button>
+            <van-row>
+                <van-cell-group>
+                    <van-field
+                        v-model="username"
+                        required
+                        clearable
+                        label="用户名"
+                        placeholder="请输入用户名"
+                    ></van-field>
+
+                    <van-field
+                        v-model="password"
+                        type="password"
+                        label="密码"
+                        placeholder="请输入密码"
+                        required
+                    ></van-field>
+
+                </van-cell-group>
+            </van-row>
+            <van-row gutter="20" type="flex" justify="center">
+                <van-col span="8">
+                    <van-button size="large" type="primary" v-on:click="login">Sign In</van-button>
+                </van-col>
+                <van-col span="8">
+                    <van-button plain size="large" type="primary" v-on:click="register">Sign up</van-button>
+                </van-col>
+            </van-row>
         </div>
 
         <script src="{% static 'user/javascript/login.js' %}">

@@ -1,7 +1,9 @@
 var list = new Vue({
     el: '#list',
     data: {
-        items: []
+        items: [],
+        loading: false,
+        finished: false
     },
 
     mounted() {
@@ -31,6 +33,13 @@ var list = new Vue({
         deleteItem: function (todoId) {
             apiDeleteTodo(todoId).then(res => {
                 location.reload();
+            });
+        },
+        fetchData: function () {
+            apiTodoList().then(res => {
+                this.items = res['data']['items'];
+                this.loading = false;
+                this.finished = true;
             });
         }
     }

@@ -18,19 +18,35 @@
 </head>
 <body>
     <div id="list">
-        <button v-on:click="addItem">add item</button>
-        <button v-on:click="signOut">Sign out</button>
+        <van-row gutter="20" type="flex" justify="center">
+            <van-col span="8">
+                <van-button size="large" type="primary" v-on:click="addItem">Add</van-button>
+            </van-col>
 
-        <ul>
-            {% verbatim %}
-            <li v-for="item in items" :style="item.status == 0 ? 'color : blue' : 'color : red'">
-                {{ item.title }}
-                <button v-on:click="editItem(item.id)">Edit</button>
-                <button v-on:click="finishItem(item.id)" v-if="item.status == 0">Finish</button>
-                <button v-on:click="deleteItem(item.id)">Delete</button>
-            </li>
-            {% endverbatim %}
-        </ul>
+            <van-col span="8">
+                <van-button plain size="large" type="danger" v-on:click="signOut">Sign Out</van-button>
+            </van-col>
+        </van-row>
+
+        <van-list
+            v-model="loading"
+            @load="fetchData"
+            :finished = "finished"
+            >
+            <van-cell
+                v-for="item in items"
+                :title = "item.title"
+                v-on:click = "editItem(item.id)"
+                :style = "item.status == 0 ? 'color : gray' : 'color : green'"
+            >
+                <!-- <van-button size="small" type="info" v-on:click="editItem(item.id)">Edit</van-button> -->
+                <van-button size="small"
+                            type="primary"
+                            v-on:click="finishItem(item.id)"
+                            v-if="item.status == 0">Finish</van-button>
+                <van-button size="small" type="danger" v-on:click="deleteItem(item.id)">Delete</van-button>
+            </van-cell>
+        </van-list>
     </div>
 
     <script src="{% static 'todo/javascript/list.js' %}">

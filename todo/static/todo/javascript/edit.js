@@ -12,9 +12,13 @@ var todo = new Vue({
     },
     methods: {
         edit: function (event) {
-            apiEditTodo({'title' : this.title, 'detail' : this.detail}).then(res => {
-                location.href = '/' + cookieUsername() + '/todos';
-            });
+            if (this.title.length == 0) {
+                vant.Toast('名称不能为空');
+            } else {
+                apiEditTodo({'title' : this.title, 'detail' : this.detail}).then(res => {
+                    location.href = '/' + cookieUsername() + '/todos';
+                });
+            }
         }
     }
 })

@@ -36,10 +36,12 @@
             <van-cell
                 v-for="item in items"
                 :title = "item.title"
-                v-on:click = "editItem(item.id)"
                 :style = "item.status == 0 ? 'color : gray' : 'color : green'"
             >
-                <!-- <van-button size="small" type="info" v-on:click="editItem(item.id)">Edit</van-button> -->
+                <van-button size="small"
+                            type="info"
+                            v-on:click="editItem(item.id)">Edit</van-button>
+
                 <van-button size="small"
                             type="primary"
                             v-on:click="finishItem(item.id)"

@@ -1,1 +1,1 @@
-# 基于python，Django，Vue的todo list demo。
+基于python，Django，Vue的todo list demo。
